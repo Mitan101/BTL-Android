@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0A92FB">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txtmatv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ma thanh vien:"
+                android:textSize="20dp"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textColor="#fff"/>
+            <TextView
+                android:id="@+id/txttentv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ten thanh vien"
+                android:textSize="20dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"/>
+            <TextView
+                android:id="@+id/txtnamsinh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nam sinh"
+                android:textSize="20dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"/>
+            <TextView
+                android:id="@+id/txtemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email:"
+                android:textSize="20dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"/>
+            <TextView
+                android:id="@+id/txtphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone:"
+                android:textSize="20dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imgdel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24pm"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -65,13 +65,8 @@
                     android:icon="@drawable/baseline_home_24"
                     android:checkable="true" />
                 <item
-                    android:id="@+id/home_user_giohang"
-                    android:title="Giỏ hàng"
-                    android:icon="@drawable/baseline_shopping_cart_24"
-                    android:checkable="true" />
-                <item
                     android:id="@+id/home_user_hoadon"
-                    android:title="Lịch sử đặt hàng"
+                    android:title="Hóa đơn"
                     android:icon="@drawable/hoadon"
                     android:checkable="true" />
                 <item

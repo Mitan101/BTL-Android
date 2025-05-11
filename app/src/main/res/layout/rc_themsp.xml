@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#D3D0D0"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        android:background="#ffff">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:id="@+id/tt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+android:layout_margin="5dp"
+                >
+
+                <ImageView
+                    android:id="@+id/tsp_anh"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/iconsp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/thongtin"
+                android:layout_toRightOf="@+id/tt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+
+                android:layout_toLeftOf="@+id/tsp_edit">
+                <TextView
+                    android:id="@+id/tsp_tensp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ten"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/tsp_gia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="gia"
+                    android:textColor="#ff00"/>
+                <TextView
+                    android:id="@+id/tsp_loaidoan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="loai"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/tsp_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_delete_24pm"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/tsp_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_edit_24pm"
+                android:layout_toLeftOf="@id/tsp_delete"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mô tả :"
+            android:layout_toRightOf="@+id/tt"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:id="@+id/tsp_mota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dcdd"
+            android:textSize="15dp"
+            android:layout_marginLeft="5dp"/>
+
+
+    </LinearLayout>
+    </LinearLayout>
+    
+    
+
+
+</androidx.cardview.widget.CardView>

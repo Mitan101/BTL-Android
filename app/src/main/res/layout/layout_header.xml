@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:background="#F35E2F"
-    android:gravity="bottom"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#00D9FF">
 
-    <ImageView
-        android:id="@+id/nav_header_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:contentDescription="Profile Image" />
-
-    <TextView
-        android:id="@+id/nav_header_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="User Name"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/nav_header_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user@example.com"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/anh"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/login1"
+            android:layout_margin="20dp"
+            />
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/anh"
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome , Minh"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
 </LinearLayout>
