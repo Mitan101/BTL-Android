@@ -27,11 +27,6 @@
                     android:icon="@drawable/hoadon"
                     android:checkable="true" />
                 <item
-                    android:id="@+id/home_admin_Banan"
-                    android:title="Quản lý bàn ăn"
-                    android:icon="@drawable/baseline_home_24"
-                    android:checkable="true" />
-                <item
                     android:id="@+id/home_admin_ND"
                     android:title="Quản lý người dùng"
                     android:icon="@drawable/baseline_people_24"
@@ -40,20 +35,6 @@
         </item>
     </group>
 
-    <group android:checkableBehavior="single">
-        <item android:title="Người dùng"
-            android:id="@+id/daubep"
-            android:visible="false">
-            <menu>
-                <item
-                    android:id="@+id/home_daubep_hoadon"
-                    android:title="Đơn hàng được đặt"
-                    android:icon="@drawable/hoadon"
-                    android:checkable="true" />
-
-            </menu>
-        </item>
-    </group>
     <group android:checkableBehavior="single">
         <item android:title="Người dùng"
             android:id="@+id/user"

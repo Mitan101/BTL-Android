@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp">
+
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0A92FB">
+
+        <ImageView
+            android:id="@+id/dap_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/dap_image"
+            android:layout_toLeftOf="@+id/dap_edit"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/dap_ma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ma do an phu"
+                android:textSize="16dp"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textColor="#fff"/>
+
+            <TextView
+                android:id="@+id/dap_ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ten do an phu"
+                android:textSize="18dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"/>
+
+            <TextView
+                android:id="@+id/dap_gia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="15.000đ"
+                android:textSize="16dp"
+                android:layout_margin="5dp"
+                android:textColor="#FFEB3B" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/dap_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24pm"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/dap_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_edit_24pm"
+            android:layout_toLeftOf="@id/dap_delete"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

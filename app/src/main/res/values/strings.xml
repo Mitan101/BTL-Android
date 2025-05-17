@@ -98,6 +98,7 @@
     <string name="order_success">Đặt hàng thành công</string>
     <string name="order_failed">Đặt hàng thất bại</string>
     <string name="add_to_cart_success">Thêm vào giỏ hàng thành công</string>
+    <string name="order_automatically">Đặt hàng tự động với thông tin tài khoản</string>
 
     <!-- Trạng thái đơn hàng -->
     <string name="order_status">Trạng thái đơn hàng</string>
@@ -106,6 +107,8 @@
     <string name="status_delivering">Đang giao hàng</string>
     <string name="status_completed">Đã hoàn thành</string>
     <string name="status_cancelled">Đã hủy</string>
+    <string name="order_pending">Chưa giao</string>
+    <string name="order_delivered">Đã giao</string>
 
     <!-- Thông tin chi tiết đơn hàng -->
     <string name="order_detail">Chi tiết đơn hàng</string>
@@ -119,6 +122,7 @@
     <string name="start_cooking">Bắt đầu chế biến</string>
     <string name="complete_order">Hoàn thành món</string>
     <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="view_details">Xem chi tiết</string>
 
     <!-- Tìm kiếm -->
     <string name="search_hint">Tìm kiếm món ăn...</string>
