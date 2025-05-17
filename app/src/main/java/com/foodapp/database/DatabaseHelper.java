@@ -28,8 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql_nguoidung);
         String mauUSer = "INSERT INTO " + Constants.TABLE_USER + " " +
                 "VALUES (1,'admin','Quản lý','admin','helo@gmail.com','2004','012345678','" + Constants.USER_TYPE_ADMIN + "')," +
-                "(2,'nguoidung01','Người dùng','nguoidung01','nguoidung@gmail.com','2005','123456789','" + Constants.USER_TYPE_USER + "')," +
-                "(3,'daubep','Đầu bếp','daubep','daubep@gmail.com','2002','123456789','" + Constants.USER_TYPE_CHEF + "')";
+                "(2,'user','Người dùng','user','nguoidung@gmail.com','2005','123456789','" + Constants.USER_TYPE_USER + "')";
         sqLiteDatabase.execSQL(mauUSer);
 
         // Bảng loại đồ ăn
@@ -56,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql_doanphu = "CREATE TABLE " + Constants.TABLE_SIDE_DISH + " (\n" +
                 "    MaDoAnPhu  INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    TenDoAnPhu TEXT NOT NULL,\n" +
-                "    Anh TEXT,\n" +
+                "    anh TEXT,\n" +
                 "    Gia REAL DEFAULT 0\n" +
                 ");\n";
         sqLiteDatabase.execSQL(sql_doanphu);
@@ -66,32 +65,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Bảng hóa đơn
         String sql_hoadon = "CREATE TABLE " + Constants.TABLE_ORDER +
                 "(mahoadon integer primary key,Email text not null,hoten text,SDT text not null," +
-                "diachinhan text not null, thucdon text ,ngaydathang text,tongtien integer ,thanhtoan text,trangthai text)";
+                "diachinhan text not null, thucdon text ,ngaydathang text,tongtien integer ,thanhtoan text)";
         sqLiteDatabase.execSQL(sql_hoadon);
 
         // Bảng giỏ hàng
         String giohang = "CREATE TABLE " + Constants.TABLE_CART +
                 "(masp integer primary key not null ,tensp text not null,tendoanphu text," +
-                "giasp integer not null,soluong integer,anhsp text )";
+                "giasp integer not null,soluong integer,anhsp text, table_info text)";
         sqLiteDatabase.execSQL(giohang);
-
-        // Bảng bàn ăn
-        String sql_ban = "CREATE TABLE " + Constants.TABLE_TABLE + "(maban integer primary key not null ,tenban text not null)";
-        sqLiteDatabase.execSQL(sql_ban);
-        String ban = "INSERT INTO " + Constants.TABLE_TABLE + "(tenban) VALUES ('Bàn số 1'),('Bàn số 2'),('Bàn số 3'),('Bàn số 4')";
-        sqLiteDatabase.execSQL(ban);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_USER);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_FOOD);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_CATEGORY);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_SIDE_DISH);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_ORDER);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_CART);
-        sqLiteDatabase.execSQL("DROP TABLE if exists " + Constants.TABLE_TABLE);
-
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        // Drop all tables
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_USER);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_FOOD);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_CATEGORY);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_SIDE_DISH);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_ORDER);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_CART);
     }
 }

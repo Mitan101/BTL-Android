@@ -1,6 +1,8 @@
 package com.foodapp.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int maTV;
     private String maND;
     private String hoTen;

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.foodapp.database.DatabaseHelper;
 import com.foodapp.models.Food;
+import com.foodapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class FoodDao {
         values.put("thongtin", food.getThongTin());
         values.put("anh", food.getLinkAnh());
 
-        return db.insert("dt_doan", null, values);
+        return db.insert(Constants.TABLE_FOOD, null, values);
     }
 
     // Update food
@@ -41,29 +42,29 @@ public class FoodDao {
         values.put("thongtin", food.getThongTin());
         values.put("anh", food.getLinkAnh());
 
-        return db.update("dt_doan", values, "madoan=?", new String[]{String.valueOf(food.getMaDoAn())});
+        return db.update(Constants.TABLE_FOOD, values, "madoan=?", new String[]{String.valueOf(food.getMaDoAn())});
     }
 
     // Delete food
     public int delete(String id) {
-        return db.delete("dt_doan", "madoan=?", new String[]{id});
+        return db.delete(Constants.TABLE_FOOD, "madoan=?", new String[]{id});
     }
 
     // Get all foods
     public List<Food> getAll() {
-        String sql = "SELECT * FROM dt_doan";
+        String sql = "SELECT * FROM " + Constants.TABLE_FOOD;
         return getData(sql);
     }
 
     // Get foods by category
     public List<Food> getFoodsByCategory(String categoryId) {
-        String sql = "SELECT * FROM dt_doan WHERE maloai=?";
+        String sql = "SELECT * FROM " + Constants.TABLE_FOOD + " WHERE maloai=?";
         return getData(sql, categoryId);
     }
 
     // Get food by ID
     public Food getById(String id) {
-        String sql = "SELECT * FROM dt_doan WHERE madoan=?";
+        String sql = "SELECT * FROM " + Constants.TABLE_FOOD + " WHERE madoan=?";
         List<Food> list = getData(sql, id);
         return list.get(0);
     }

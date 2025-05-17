@@ -82,17 +82,6 @@
                             android:layout_weight="1"
                             android:text="01/01/2023" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Trạng thái: " />
-
-                        <TextView
-                            android:id="@+id/tvOrderDetailStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="Đang chờ xử lý" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -171,29 +160,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnOrderDetailUpdateStatus"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    style="@style/Button.Primary"
-                    android:text="Cập nhật trạng thái" />
-
-                <Button
-                    android:id="@+id/btnOrderDetailCancel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:text="@string/cancel_order" />
-            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

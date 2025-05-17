@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +43,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItem item = cartItems.get(position);
 
+        // Thiết lập trạng thái checkbox
+        holder.cbSelect.setChecked(item.isSelected());
+        holder.cbSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            item.setSelected(isChecked);
+            if (listener != null) {
+                listener.onItemSelectionChanged();
+            }
+        });
+
         // Hiển thị thông tin sản phẩm
         holder.tvName.setText(item.getTenSanPham());
 
@@ -74,21 +84,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         // Sự kiện tăng số lượng
         holder.btnIncrease.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onIncreaseQuantity(item, position);
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    listener.onIncreaseQuantity(item, adapterPos);
+                }
             }
         });
 
         // Sự kiện giảm số lượng
         holder.btnDecrease.setOnClickListener(v -> {
             if (listener != null && item.getSoLuong() > 1) {
-                listener.onDecreaseQuantity(item, position);
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    listener.onDecreaseQuantity(item, adapterPos);
+                }
             }
         });
 
         // Sự kiện xóa sản phẩm
         holder.btnRemove.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onRemoveItem(item, position);
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    listener.onRemoveItem(item, adapterPos);
+                }
             }
         });
     }
@@ -100,8 +119,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     // Cập nhật dữ liệu mới
     public void updateData(List<CartItem> newItems) {
+        if (newItems == null) {
+            newItems = new ArrayList<>();
+        }
+
+        // Create a copy of the new list to prevent reference issues
+        List<CartItem> updatedList = new ArrayList<>(newItems);
+
+        // Clear and update items
         this.cartItems.clear();
-        this.cartItems.addAll(newItems);
+        this.cartItems.addAll(updatedList);
+
+        // Notify adapter of complete dataset change
         notifyDataSetChanged();
     }
 
@@ -115,6 +144,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         ImageView imgProduct;
         TextView tvName, tvSideDish, tvPrice, tvQuantity;
         ImageButton btnIncrease, btnDecrease, btnRemove;
+        CheckBox cbSelect;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -126,6 +156,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             btnIncrease = itemView.findViewById(R.id.btnCartItemIncrease);
             btnDecrease = itemView.findViewById(R.id.btnCartItemDecrease);
             btnRemove = itemView.findViewById(R.id.btnCartItemRemove);
+            cbSelect = itemView.findViewById(R.id.cbCartItemSelect);
         }
     }
 
@@ -136,5 +167,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         void onDecreaseQuantity(CartItem item, int position);
 
         void onRemoveItem(CartItem item, int position);
+
+        void onItemSelectionChanged();
     }
 }

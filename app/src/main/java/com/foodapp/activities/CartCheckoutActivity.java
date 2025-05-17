@@ -2,6 +2,7 @@ package com.foodapp.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.foodapp.models.Order;
 import com.foodapp.utils.AppUtils;
 import com.foodapp.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +36,9 @@ public class CartCheckoutActivity extends BaseActivity {
     private CartDao cartDao;
     private OrderDao orderDao;
     private List<CartItem> cartItems;
+    private List<CartItem> selectedItems;
     private double totalPrice;
+    private boolean selectedItemsOnly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,13 @@ public class CartCheckoutActivity extends BaseActivity {
         cartDao = new CartDao(this);
         orderDao = new OrderDao(this);
 
+        // Hiển thị thông tin người dùng nếu đã đăng nhập
+        if (isLoggedIn()) {
+            edtName.setText(prefsManager.getFullName());
+            edtPhone.setText(prefsManager.getPhone());
+            edtAddress.setText("Địa chỉ giao hàng mặc định");
+        }
+
         // Thiết lập sự kiện cho nút
         btnConfirm.setOnClickListener(view -> placeOrder());
         btnCancel.setOnClickListener(view -> finish());
@@ -75,7 +86,10 @@ public class CartCheckoutActivity extends BaseActivity {
     private void loadCartItems() {
         showLoading();
 
-        // Lấy danh sách sản phẩm trong giỏ hàng
+        selectedItemsOnly = getIntent().getBooleanExtra(Constants.EXTRA_SELECTED_ITEMS_ONLY, false);
+
+        ArrayList<Integer> selectedIds = getIntent().getIntegerArrayListExtra(Constants.EXTRA_SELECTED_ITEM_IDS);
+
         cartItems = cartDao.getAll();
 
         if (cartItems.isEmpty()) {
@@ -84,23 +98,40 @@ public class CartCheckoutActivity extends BaseActivity {
             return;
         }
 
-        // Tính tổng tiền
-        totalPrice = cartDao.getTotalPrice();
+        selectedItems = new ArrayList<>();
 
-        // Hiển thị tổng tiền
-        tvTotalPrice.setText(getString(R.string.total_price, AppUtils.formatCurrency(totalPrice)));
-
-        // Đổ dữ liệu người dùng nếu đã đăng nhập
-        if (isLoggedIn()) {
-            edtName.setText(prefsManager.getFullName());
-            edtPhone.setText(prefsManager.getPhone());
+        if (selectedItemsOnly && selectedIds != null && !selectedIds.isEmpty()) {
+            for (CartItem item : cartItems) {
+                if (selectedIds.contains(item.getMaSanPham())) {
+                    selectedItems.add(item);
+                }
+            }
+        } else {
+            selectedItems.addAll(cartItems);
         }
+
+        if (selectedItems.isEmpty()) {
+            showToast(getString(R.string.no_items_selected));
+            finish();
+            return;
+        }
+
+        totalPrice = 0;
+        for (CartItem item : selectedItems) {
+            totalPrice += item.getTotalPrice();
+        }
+
+        tvTotalPrice.setText(getString(R.string.total_price, AppUtils.formatCurrency(totalPrice)));
 
         hideLoading();
     }
 
     private void placeOrder() {
-        // Kiểm tra dữ liệu nhập vào
+        if (!isLoggedIn()) {
+            showToast(getString(R.string.login_failed));
+            return;
+        }
+
         String name = edtName.getText().toString().trim();
         String phone = edtPhone.getText().toString().trim();
         String address = edtAddress.getText().toString().trim();
@@ -110,10 +141,8 @@ public class CartCheckoutActivity extends BaseActivity {
             return;
         }
 
-        // Lấy phương thức thanh toán
         String paymentMethod = rbCash.isChecked() ? Constants.PAYMENT_CASH : Constants.PAYMENT_CREDIT_CARD;
 
-        // Tạo đơn hàng mới
         Order order = new Order();
         order.setMaHoaDon(generateOrderId());
         order.setEmail(prefsManager.getEmail());
@@ -122,14 +151,23 @@ public class CartCheckoutActivity extends BaseActivity {
         order.setDiaChi(address);
         order.setThucDon(generateOrderItems());
         order.setNgayDat(AppUtils.getCurrentDateTime());
+
+        Log.d("CartCheckout", "Total Price: " + totalPrice + " for " + selectedItems.size() + " items");
+
         order.setTongTien(totalPrice);
         order.setThanhToan(paymentMethod);
-        order.setTrangThai(Constants.STATUS_PENDING);
 
         long result = orderDao.insert(order);
 
         if (result > 0) {
-            cartDao.deleteAll();
+            // Remove ordered items from cart
+            if (selectedItemsOnly) {
+                for (CartItem item : selectedItems) {
+                    cartDao.delete(String.valueOf(item.getMaSanPham()));
+                }
+            } else {
+                cartDao.deleteAll();
+            }
 
             AppUtils.showInfoDialog(this,
                     getString(R.string.success),
@@ -149,7 +187,7 @@ public class CartCheckoutActivity extends BaseActivity {
         // Tạo chuỗi mô tả các món ăn trong đơn hàng
         StringBuilder sb = new StringBuilder();
 
-        for (CartItem item : cartItems) {
+        for (CartItem item : selectedItems) {
             sb.append(item.getSoLuong())
                     .append(" x ")
                     .append(item.getTenSanPham());

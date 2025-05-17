@@ -69,7 +69,6 @@ public class CartDao {
             cartItem.setGiaSanPham(cursor.getDouble(3));
             cartItem.setSoLuong(cursor.getInt(4));
             cartItem.setAnhSanPham(cursor.getString(5));
-
             list.add(cartItem);
         }
         cursor.close();

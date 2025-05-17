@@ -53,22 +53,28 @@
             android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.FoodDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.CartActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.CartCheckoutActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.OrderDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.CategoryProductsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.OrderHistoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
             android:name=".activities.UserProfileActivity"
             android:exported="false"

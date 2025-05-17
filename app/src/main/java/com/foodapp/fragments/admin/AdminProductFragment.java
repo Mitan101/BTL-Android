@@ -155,8 +155,7 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
             Category defaultCategory = new Category();
             defaultCategory.setMaLoai(1);
             defaultCategory.setTenLoai("Mặc định");
-            defaultCategory.setMoTa("");
-            defaultCategory.setAnh("");
+
 
             categoryList = new ArrayList<>();
             categoryList.add(defaultCategory);

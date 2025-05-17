@@ -24,13 +24,12 @@ import com.foodapp.fragments.admin.AdminOrderFragment;
 import com.foodapp.fragments.admin.AdminProductFragment;
 import com.foodapp.fragments.admin.AdminRevenueFragment;
 import com.foodapp.fragments.admin.AdminSideDishFragment;
-import com.foodapp.fragments.admin.AdminTableFragment;
 import com.foodapp.fragments.admin.AdminUserFragment;
-import com.foodapp.fragments.chef.ChefOrderFragment;
 import com.foodapp.fragments.user.ChangePasswordFragment;
 import com.foodapp.fragments.user.UserCategoryFragment;
 import com.foodapp.fragments.user.UserProductFragment;
 import com.foodapp.models.User;
+import com.foodapp.utils.SharedPreferencesManager;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -42,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
     private UserDao userDao;
     private TextView nameTextView;
     private String userId;
+    private SharedPreferencesManager prefsManager;
 
     // Khởi tạo các fragment một lần để tái sử dụng
     private AdminProductFragment adminProductFragment;
@@ -50,11 +50,9 @@ public class HomeActivity extends AppCompatActivity {
     private AdminCategoryFragment adminCategoryFragment;
     private AdminUserFragment adminUserFragment;
     private AdminRevenueFragment adminRevenueFragment;
-    private AdminTableFragment adminTableFragment;
     private UserProductFragment userProductFragment;
     private UserCategoryFragment userCategoryFragment;
     private ChangePasswordFragment changePasswordFragment;
-    private ChefOrderFragment chefOrderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +63,9 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.home_all);
         toolbar = findViewById(R.id.home_toobal);
         fragmentContainer = findViewById(R.id.home_fragment);
+
+        // Khởi tạo SharedPreferencesManager
+        prefsManager = new SharedPreferencesManager(this);
 
         // Cấu hình Toolbar và DrawerLayout
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
@@ -79,36 +80,41 @@ public class HomeActivity extends AppCompatActivity {
         adminCategoryFragment = new AdminCategoryFragment();
         adminUserFragment = new AdminUserFragment();
         adminProductFragment = new AdminProductFragment();
-        adminTableFragment = new AdminTableFragment();
         adminSideDishFragment = new AdminSideDishFragment();
 
         userProductFragment = new UserProductFragment();
         userCategoryFragment = new UserCategoryFragment();
         changePasswordFragment = new ChangePasswordFragment();
-        chefOrderFragment = new ChefOrderFragment();
 
         // Cấu hình NavigationView và headerView
         navigationView = findViewById(R.id.main_nav_view);
         headerView = navigationView.getHeaderView(0);
-        nameTextView = headerView.findViewById(R.id.tv_header);
+        nameTextView = headerView.findViewById(R.id.nav_header_name);
 
-        // Lấy thông tin người dùng từ intent
-        Intent intent = getIntent();
-        userId = intent.getStringExtra(Constants.EXTRA_USER_ID);
+        // Lấy thông tin người dùng từ SharedPreferencesManager
         userDao = new UserDao(this);
+        userId = prefsManager.getUserId();
         User user = userDao.getById(userId);
         if (user != null) {
             nameTextView.setText("Chào mừng " + user.getHoTen() + "!");
         } else {
             nameTextView.setText("Chào mừng!");
-            finish(); // Kết thúc activity nếu không tìm thấy người dùng
-            return;
+            // Kiểm tra nếu đã đăng nhập nhưng không tìm thấy thông tin người dùng
+            if (prefsManager.isLoggedIn()) {
+                nameTextView.setText("Chào mừng " + prefsManager.getFullName() + "!");
+            } else {
+                // Nếu không đăng nhập, chuyển về màn hình login
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
         }
 
         // Hiện thị menu theo loại người dùng
         fragmentManager = getSupportFragmentManager();
 
-        String userRole = user.getLoaiTaiKhoan();
+        String userRole = user != null ? user.getLoaiTaiKhoan() : null;
         if (userRole != null) {
             if (userRole.equalsIgnoreCase(Constants.USER_TYPE_ADMIN)) {
                 // Hiển thị menu cho admin
@@ -120,16 +126,6 @@ public class HomeActivity extends AppCompatActivity {
                 if (menuItem != null) {
                     selectNavigationItem(menuItem);
                     fragmentManager.beginTransaction().replace(R.id.home_fragment, adminProductFragment).commitNowAllowingStateLoss();
-                }
-            } else if (userRole.equalsIgnoreCase(Constants.USER_TYPE_CHEF)) {
-                // Hiển thị menu cho đầu bếp
-                navigationView.getMenu().findItem(R.id.daubep).setVisible(true);
-
-                // Chọn mặc định mục hóa đơn
-                MenuItem menuItem = navigationView.getMenu().findItem(R.id.home_daubep_hoadon);
-                if (menuItem != null) {
-                    selectNavigationItem(menuItem);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment, chefOrderFragment).commit();
                 }
             } else {
                 // Hiển thị menu cho người dùng
@@ -162,31 +158,31 @@ public class HomeActivity extends AppCompatActivity {
                         .commit();
             } else if (itemId == R.id.home_user_danhsachSP) {
                 fragmentManager.beginTransaction().replace(R.id.home_fragment, userProductFragment).commit();
+            } else if (itemId == R.id.home_user_giohang) {
+                Intent intentToCart = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intentToCart);
             } else if (itemId == R.id.home_user_hoadon) {
                 Intent intentToOrder = new Intent(HomeActivity.this, OrderHistoryActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("ma", userId);
-                intentToOrder.putExtras(bundle);
                 startActivity(intentToOrder);
             } else if (itemId == R.id.home_user_loaiSP) {
                 fragmentManager.beginTransaction().replace(R.id.home_fragment, userCategoryFragment).commit();
             } else if (itemId == R.id.home_taikhoan) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 Intent intent1 = new Intent(HomeActivity.this, UserProfileActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("ma", userId);
-                intent1.putExtras(bundle);
                 startActivity(intent1);
             } else if (itemId == R.id.home_doimatkhau) {
                 fragmentManager.beginTransaction().replace(R.id.home_fragment, changePasswordFragment).commit();
-            } else if (itemId == R.id.home_admin_Banan) {
-                fragmentManager.beginTransaction().replace(R.id.home_fragment, adminTableFragment).commit();
             } else if (itemId == R.id.home_Dangxuat) {
+                // Xóa thông tin đăng nhập nếu không lưu "ghi nhớ"
+                if (!prefsManager.isRemembered()) {
+                    prefsManager.clearAll();
+                } else {
+                    prefsManager.clearLoginDetails();
+                }
+
                 Intent intent1 = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent1);
                 finish();
-            } else if (itemId == R.id.home_daubep_hoadon) {
-                fragmentManager.beginTransaction().replace(R.id.home_fragment, chefOrderFragment).commit();
             }
 
             // Đánh dấu item được chọn
@@ -215,5 +211,10 @@ public class HomeActivity extends AppCompatActivity {
 
         // Cập nhật tiêu đề
         toolbar.setTitle(item.getTitle());
+    }
+
+    // Phương thức để lấy userId cho các fragment
+    public String getUserId() {
+        return userId;
     }
 }

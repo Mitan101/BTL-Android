@@ -1,6 +1,8 @@
 package com.foodapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +14,8 @@ import com.foodapp.R;
 import com.foodapp.adapters.OrderAdapter;
 import com.foodapp.database.dao.OrderDao;
 import com.foodapp.models.Order;
+import com.foodapp.utils.Constants;
+import com.foodapp.utils.SharedPreferencesManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +27,13 @@ public class OrderHistoryActivity extends BaseActivity {
     private OrderAdapter adapter;
     private TextView tvEmptyOrders;
     private OrderDao orderDao;
-    private String userId;
     private List<Order> orderList;
+    private SharedPreferencesManager prefsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
-        // Lấy userId từ Intent
-        userId = getIntent().getStringExtra("ma");
-        if (userId == null) {
-            userId = getCurrentUsername();
-        }
 
         // Ánh xạ view
         toolbar = findViewById(R.id.toolbarOrderHistory);
@@ -45,22 +43,22 @@ public class OrderHistoryActivity extends BaseActivity {
         // Cấu hình toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.menu_orders);
+        getSupportActionBar().setTitle("Lịch sử đơn hàng");
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        // Cấu hình RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         orderList = new ArrayList<>();
         adapter = new OrderAdapter(this, orderList);
         recyclerView.setAdapter(adapter);
 
-        // Khởi tạo DAO
         orderDao = new OrderDao(this);
+        prefsManager = new SharedPreferencesManager(this);
 
-        // Xử lý sự kiện click vào đơn hàng
         adapter.setOnItemClickListener((order, position) -> {
-            // Mở màn hình chi tiết đơn hàng
+            Intent intent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_ORDER_ID, order.getMaHoaDon());
+            startActivity(intent);
         });
 
         // Tải dữ liệu đơn hàng
@@ -69,14 +67,42 @@ public class OrderHistoryActivity extends BaseActivity {
 
     private void loadOrderHistory() {
         showLoading();
-        orderList = orderDao.getOrdersByUser(userId);
 
-        if (orderList.isEmpty()) {
+        // Lấy email người dùng đã đăng nhập
+        String email = getCurrentUserEmail();
+        Log.d("OrderHistory", "Loading orders for email: " + email);
+
+        if (email.isEmpty()) {
             tvEmptyOrders.setVisibility(View.VISIBLE);
-        } else {
-            tvEmptyOrders.setVisibility(View.GONE);
-            adapter.updateData(orderList);
+            tvEmptyOrders.setText("Bạn cần đăng nhập để xem đơn hàng");
+            hideLoading();
+            return;
         }
+
+        try {
+            orderList = orderDao.getByUserEmail(email);
+
+            if (orderList.isEmpty()) {
+                tvEmptyOrders.setVisibility(View.VISIBLE);
+                tvEmptyOrders.setText("Bạn chưa có đơn hàng nào");
+            } else {
+                tvEmptyOrders.setVisibility(View.GONE);
+                adapter.updateData(orderList);
+                Log.d("OrderHistory", "Successfully loaded " + orderList.size() + " orders");
+
+                // Log each order for debugging
+                for (Order order : orderList) {
+                    Log.d("OrderHistory", "Order #" + order.getMaHoaDon() +
+                            " Email: '" + order.getEmail() + "'");
+                }
+            }
+        } catch (Exception e) {
+            Log.e("OrderHistory", "Error loading orders", e);
+            e.printStackTrace();
+            tvEmptyOrders.setVisibility(View.VISIBLE);
+            tvEmptyOrders.setText("Lỗi khi tải đơn hàng: " + e.getMessage() + "\n\nQuét màn hình xuống để thử lại");
+        }
+
         hideLoading();
     }
 

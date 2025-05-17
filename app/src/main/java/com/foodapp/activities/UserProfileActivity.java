@@ -27,10 +27,12 @@ public class UserProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        // Lấy userId từ Intent
-        userId = getIntent().getStringExtra(Constants.EXTRA_USER_ID);
-        if (userId == null) {
-            userId = getCurrentUsername();
+        // Lấy userId từ SharedPreferencesManager
+        userId = getCurrentUserId();
+        if (userId == null || userId.isEmpty()) {
+            showToast("Không tìm thấy thông tin người dùng");
+            finish();
+            return;
         }
 
         // Ánh xạ view
@@ -92,7 +94,7 @@ public class UserProfileActivity extends BaseActivity {
 
         if (result > 0) {
             // Lưu thông tin người dùng vào SharedPreferences
-            prefsManager.saveUserDetails(fullName, email, phone, user.getLoaiTaiKhoan());
+            prefsManager.saveUserDetails(userId, fullName, email, phone, user.getLoaiTaiKhoan());
 
             AppUtils.showInfoDialog(this,
                     getString(R.string.success),

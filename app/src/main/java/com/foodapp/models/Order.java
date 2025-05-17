@@ -10,12 +10,11 @@ public class Order {
     private String ngayDat;
     private double tongTien;
     private String thanhToan;
-    private String trangThai;
 
     public Order() {
     }
 
-    public Order(int maHoaDon, String email, String hoTen, String sdt, String diaChi, String thucDon, String ngayDat, double tongTien, String thanhToan, String trangThai) {
+    public Order(int maHoaDon, String email, String hoTen, String sdt, String diaChi, String thucDon, String ngayDat, double tongTien, String thanhToan) {
         this.maHoaDon = maHoaDon;
         this.email = email;
         this.hoTen = hoTen;
@@ -25,7 +24,6 @@ public class Order {
         this.ngayDat = ngayDat;
         this.tongTien = tongTien;
         this.thanhToan = thanhToan;
-        this.trangThai = trangThai;
     }
 
     public int getMaHoaDon() {
@@ -100,11 +98,18 @@ public class Order {
         this.thanhToan = thanhToan;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
+    @Override
+    public String toString() {
+        return "Order{" +
+                "maHoaDon=" + maHoaDon +
+                ", email='" + email + '\'' +
+                ", hoTen='" + hoTen + '\'' +
+                ", sdt='" + sdt + '\'' +
+                ", diaChi='" + diaChi + '\'' +
+                ", thucDon='" + thucDon + '\'' +
+                ", ngayDat='" + ngayDat + '\'' +
+                ", tongTien=" + tongTien +
+                ", thanhToan='" + thanhToan + '\'' +
+                '}';
     }
 }

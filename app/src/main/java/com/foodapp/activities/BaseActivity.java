@@ -2,7 +2,10 @@ package com.foodapp.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -49,6 +52,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * Hiển thị dialog loading với thông báo
+     * @param message Thông báo hiển thị
+     */
+    protected void showLoading(String message) {
+        if (loadingDialog == null) {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(30, 30, 30, 30);
+
+            ProgressBar progressBar = new ProgressBar(this);
+            layout.addView(progressBar);
+
+            TextView textView = new TextView(this);
+            textView.setText(message);
+            textView.setPadding(20, 20, 20, 0);
+            textView.setGravity(Gravity.CENTER);
+            layout.addView(textView);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(layout);
+            builder.setCancelable(false);
+            loadingDialog = builder.create();
+            loadingDialog.show();
+        }
+    }
+
+    /**
      * Ẩn dialog loading
      */
     protected void hideLoading() {
@@ -68,11 +98,47 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * Lấy ID người dùng hiện tại
+     *
+     * @return ID người dùng
+     */
+    protected String getCurrentUserId() {
+        return prefsManager.getUserId();
+    }
+
+    /**
      * Lấy tên đăng nhập của người dùng hiện tại
      *
      * @return Tên đăng nhập
      */
     protected String getCurrentUsername() {
         return prefsManager.getUsername();
+    }
+
+    /**
+     * Lấy email của người dùng hiện tại
+     *
+     * @return Email người dùng
+     */
+    protected String getCurrentUserEmail() {
+        return prefsManager.getEmail();
+    }
+
+    /**
+     * Lấy họ tên đầy đủ của người dùng hiện tại
+     *
+     * @return Họ tên người dùng
+     */
+    protected String getCurrentUserFullName() {
+        return prefsManager.getFullName();
+    }
+
+    /**
+     * Lấy loại tài khoản của người dùng hiện tại
+     *
+     * @return Loại tài khoản
+     */
+    protected String getCurrentUserType() {
+        return prefsManager.getUserType();
     }
 }

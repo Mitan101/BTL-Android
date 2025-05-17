@@ -28,10 +28,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private List<Order> orderList;
     private OnItemClickListener<Order> listener;
     private OnActionButtonClickListener actionButtonListener;
+    private boolean showDetails;
 
-    public OrderAdapter(Context context, List<Order> orderList) {
+    public OrderAdapter(Context context, List<Order> orderList, boolean showDetails) {
         this.context = context;
         this.orderList = orderList != null ? orderList : new ArrayList<>();
+        this.showDetails = showDetails;
+    }
+
+    // Constructor with default value for showDetails
+    public OrderAdapter(Context context, List<Order> orderList) {
+        this(context, orderList, true);
     }
 
     @NonNull
@@ -53,43 +60,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvOrderAmount.setText(formattedAmount);
 
         holder.tvOrderDate.setText(order.getNgayDat());
-        holder.tvOrderStatus.setText(order.getTrangThai());
 
-        // Đặt màu cho trạng thái đơn hàng
-        switch (order.getTrangThai()) {
-            case Constants.STATUS_COMPLETED:
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#4CAF50")); // Xanh lá
-                break;
-            case Constants.STATUS_CANCELLED:
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#F44336")); // Đỏ
-                break;
-            case Constants.STATUS_COOKING:
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#FF9800")); // Cam
-                break;
-            case Constants.STATUS_DELIVERING:
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#2196F3")); // Xanh dương
-                break;
-            default:
-                holder.tvOrderStatus.setTextColor(Color.parseColor("#757575")); // Xám
-                break;
-        }
+        holder.tvOrderStatus.setVisibility(View.VISIBLE);
 
-        // Nếu trạng thái là "Đang chờ xử lý" hoặc "Đang chế biến", hiển thị nút "Cập nhật trạng thái"
-        if (order.getTrangThai().equals(Constants.STATUS_PENDING) ||
-                order.getTrangThai().equals(Constants.STATUS_COOKING)) {
+        holder.tvCustomerName.setText(context.getString(R.string.customer_name, order.getHoTen()));
+        holder.tvCustomerPhone.setText(context.getString(R.string.customer_phone, order.getSdt()));
+        holder.tvCustomerAddress.setText(context.getString(R.string.customer_address, order.getDiaChi()));
+
+        holder.tvOrderItems.setText(order.getThucDon());
+
+        if (showDetails) {
             holder.btnAction.setVisibility(View.VISIBLE);
-
-            if (order.getTrangThai().equals(Constants.STATUS_PENDING)) {
-                holder.btnAction.setText(R.string.start_cooking);
-            } else if (order.getTrangThai().equals(Constants.STATUS_COOKING)) {
-                holder.btnAction.setText(R.string.complete_order);
-            }
-
+            holder.btnAction.setText(R.string.view_details);
             holder.btnAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (actionButtonListener != null) {
-                        actionButtonListener.onActionButtonClick(order, holder.getAdapterPosition());
+                    if (listener != null) {
+                        listener.onItemClick(order, holder.getAdapterPosition());
                     }
                 }
             });
@@ -134,6 +121,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView tvOrderId, tvOrderAmount, tvOrderDate, tvOrderStatus;
+        TextView tvCustomerName, tvCustomerPhone, tvCustomerAddress, tvOrderItems;
         Button btnAction;
 
         public OrderViewHolder(@NonNull View itemView) {
@@ -143,6 +131,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             tvOrderAmount = itemView.findViewById(R.id.tvOrderAmount);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvOrderStatus = itemView.findViewById(R.id.tvOrderStatus);
+            tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
+            tvCustomerPhone = itemView.findViewById(R.id.tvCustomerPhone);
+            tvCustomerAddress = itemView.findViewById(R.id.tvCustomerAddress);
+            tvOrderItems = itemView.findViewById(R.id.tvOrderItems);
             btnAction = itemView.findViewById(R.id.btnOrderAction);
         }
     }

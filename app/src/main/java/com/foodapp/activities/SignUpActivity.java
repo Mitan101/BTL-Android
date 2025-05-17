@@ -101,7 +101,7 @@ public class SignUpActivity extends BaseActivity {
 
         if (result > 0) {
             prefsManager.saveLoginDetails(username, password, false);
-            prefsManager.saveUserDetails(fullName, email, phone, Constants.USER_TYPE_USER);
+            prefsManager.saveUserDetails(username, fullName, email, phone, Constants.USER_TYPE_USER);
 
             AppUtils.showInfoDialog(this,
                     getString(R.string.success),

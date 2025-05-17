@@ -61,7 +61,11 @@ public class UserDao {
     public User getById(String id) {
         String sql = "SELECT * FROM dt_nguoidung WHERE MaND=?";
         List<User> list = getData(sql, id);
-        return list.get(0);
+        if (list.size() == 0) {
+            return null;
+        } else {
+            return list.get(0);
+        }
     }
 
     // Check login

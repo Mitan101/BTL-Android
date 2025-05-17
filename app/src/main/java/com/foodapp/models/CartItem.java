@@ -7,6 +7,7 @@ public class CartItem {
     private double giaSanPham;
     private int soLuong;
     private String anhSanPham;
+    private boolean isSelected;
 
     public CartItem() {
     }
@@ -18,6 +19,7 @@ public class CartItem {
         this.giaSanPham = giaSanPham;
         this.soLuong = soLuong;
         this.anhSanPham = anhSanPham;
+        this.isSelected = false;
     }
 
     public int getMaSanPham() {
@@ -66,6 +68,14 @@ public class CartItem {
 
     public void setAnhSanPham(String anhSanPham) {
         this.anhSanPham = anhSanPham;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     // Tính tổng tiền cho sản phẩm (giá * số lượng)

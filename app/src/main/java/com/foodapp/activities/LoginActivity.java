@@ -95,12 +95,20 @@ public class LoginActivity extends BaseActivity {
             // Lưu thông tin đăng nhập
             prefsManager.saveLoginDetails(username, password, rememberCheckbox.isChecked());
 
+            // Lưu thông tin chi tiết người dùng
+            prefsManager.saveUserDetails(
+                    isLogin.getMaND(),
+                    isLogin.getHoTen(),
+                    isLogin.getEmail(),
+                    isLogin.getSdt(),
+                    isLogin.getLoaiTaiKhoan()
+            );
+
             hideLoading();
             showToast(getString(R.string.login_success));
 
             // Chuyển đến HomeActivity
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            intent.putExtra(Constants.EXTRA_USER_ID, isLogin.getMaND());
             startActivity(intent);
             finish();
         } else {

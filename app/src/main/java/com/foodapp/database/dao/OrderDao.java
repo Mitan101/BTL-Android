@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.foodapp.database.DatabaseHelper;
 import com.foodapp.models.Order;
@@ -31,9 +32,10 @@ public class OrderDao {
         values.put("ngaydathang", order.getNgayDat());
         values.put("tongtien", order.getTongTien());
         values.put("thanhtoan", order.getThanhToan());
-        values.put("trangthai", order.getTrangThai());
 
-        return db.insert("dt_hoadon", null, values);
+        long result = db.insert("dt_hoadon", null, values);
+        Log.d("OrderDao", "Insert result: " + (result > 0 ? "Success with ID " + result : "Failed"));
+        return result;
     }
 
     // Cập nhật hóa đơn
@@ -47,70 +49,76 @@ public class OrderDao {
         values.put("ngaydathang", order.getNgayDat());
         values.put("tongtien", order.getTongTien());
         values.put("thanhtoan", order.getThanhToan());
-        values.put("trangthai", order.getTrangThai());
 
         return db.update("dt_hoadon", values, "mahoadon=?", new String[]{String.valueOf(order.getMaHoaDon())});
     }
 
-    // Xóa hóa đơn
     public int delete(String id) {
         return db.delete("dt_hoadon", "mahoadon=?", new String[]{id});
     }
 
-    // Lấy tất cả hóa đơn
     public List<Order> getAll() {
         String sql = "SELECT * FROM dt_hoadon";
         return getData(sql);
     }
 
-    // Lấy hóa đơn theo ID
     public Order getById(String id) {
+        Log.d("OrderDao", "Looking up order with ID: " + id);
         String sql = "SELECT * FROM dt_hoadon WHERE mahoadon=?";
         List<Order> list = getData(sql, id);
-        return list.get(0);
+        if (list.isEmpty()) {
+            Log.d("OrderDao", "No order found with ID: " + id);
+            return null;
+        }
+        Order foundOrder = list.get(0);
+        Log.d("OrderDao", "Found order with ID: " + id + " - Details: " + foundOrder.toString());
+        return foundOrder;
     }
 
-    // Lấy hóa đơn theo email người dùng
     public List<Order> getByUserEmail(String email) {
+        Log.d("OrderDao", "Fetching orders for email: " + email);
         String sql = "SELECT * FROM dt_hoadon WHERE Email=?";
-        return getData(sql, email);
+        List<Order> result = getData(sql, email);
+        Log.d("OrderDao", "Found " + result.size() + " orders for email: " + email);
+        return result;
     }
 
     // Lấy hóa đơn theo userId
     public List<Order> getOrdersByUser(String userId) {
-        String sql = "SELECT * FROM dt_hoadon WHERE Email=(SELECT Email FROM dt_user WHERE MaND=?)";
+        String sql = "SELECT * FROM dt_hoadon WHERE Email=(SELECT Email FROM dt_nguoidung WHERE MaND=?)";
         return getData(sql, userId);
     }
 
-    // Cập nhật trạng thái hóa đơn
-    public int updateStatus(int maHoaDon, String trangThai) {
-        ContentValues values = new ContentValues();
-        values.put("trangthai", trangThai);
 
-        return db.update("dt_hoadon", values, "mahoadon=?", new String[]{String.valueOf(maHoaDon)});
-    }
-
-    // Xử lý dữ liệu từ cursor
     private List<Order> getData(String sql, String... selectionArgs) {
         List<Order> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        try {
+            Log.d("OrderDao", "Executing query: " + sql + " with args: " + String.join(", ", selectionArgs));
+            Cursor cursor = db.rawQuery(sql, selectionArgs);
+            Log.d("OrderDao", "Cursor count: " + cursor.getCount());
 
-        while (cursor.moveToNext()) {
-            Order order = new Order();
-            order.setMaHoaDon(cursor.getInt(0));
-            order.setEmail(cursor.getString(1));
-            order.setHoTen(cursor.getString(2));
-            order.setSdt(cursor.getString(3));
-            order.setDiaChi(cursor.getString(4));
-            order.setThucDon(cursor.getString(5));
-            order.setNgayDat(cursor.getString(6));
-            order.setTongTien(cursor.getDouble(7));
-            order.setThanhToan(cursor.getString(8));
-            order.setTrangThai(cursor.getString(9));
-
-            list.add(order);
+            while (cursor.moveToNext()) {
+                try {
+                    Order order = new Order();
+                    order.setMaHoaDon(cursor.getInt(cursor.getColumnIndexOrThrow("mahoadon")));
+                    order.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("Email")));
+                    order.setHoTen(cursor.getString(cursor.getColumnIndexOrThrow("hoten")));
+                    order.setSdt(cursor.getString(cursor.getColumnIndexOrThrow("SDT")));
+                    order.setDiaChi(cursor.getString(cursor.getColumnIndexOrThrow("diachinhan")));
+                    order.setThucDon(cursor.getString(cursor.getColumnIndexOrThrow("thucdon")));
+                    order.setNgayDat(cursor.getString(cursor.getColumnIndexOrThrow("ngaydathang")));
+                    order.setTongTien(cursor.getInt(cursor.getColumnIndexOrThrow("tongtien")));
+                    order.setThanhToan(cursor.getString(cursor.getColumnIndexOrThrow("thanhtoan")));
+                    list.add(order);
+                } catch (Exception e) {
+                    Log.e("OrderDao", "Error parsing order data", e);
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("OrderDao", "Database error in getData", e);
         }
-        cursor.close();
+        Log.d("OrderDao", "Returning " + list.size() + " orders");
         return list;
     }
 }

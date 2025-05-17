@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.foodapp.database.DatabaseHelper;
 import com.foodapp.models.Category;
+import com.foodapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CategoryDao {
         ContentValues values = new ContentValues();
         values.put("tenloai", category.getTenLoai());
 
-        return db.insert("dt_loai", null, values);
+        return db.insert(Constants.TABLE_CATEGORY, null, values);
     }
 
     // Update category
@@ -33,23 +34,23 @@ public class CategoryDao {
         ContentValues values = new ContentValues();
         values.put("tenloai", category.getTenLoai());
 
-        return db.update("dt_loai", values, "maloai=?", new String[]{String.valueOf(category.getMaLoai())});
+        return db.update(Constants.TABLE_CATEGORY, values, "maloai=?", new String[]{String.valueOf(category.getMaLoai())});
     }
 
     // Delete category
     public int delete(String id) {
-        return db.delete("dt_loai", "maloai=?", new String[]{id});
+        return db.delete(Constants.TABLE_CATEGORY, "maloai=?", new String[]{id});
     }
 
     // Get all categories
     public List<Category> getAll() {
-        String sql = "SELECT * FROM dt_loai";
+        String sql = "SELECT * FROM " + Constants.TABLE_CATEGORY;
         return getData(sql);
     }
 
     // Get category by ID
     public Category getById(String id) {
-        String sql = "SELECT * FROM dt_loai WHERE maloai=?";
+        String sql = "SELECT * FROM " + Constants.TABLE_CATEGORY + " WHERE maloai=?";
         List<Category> list = getData(sql, id);
         return list.isEmpty() ? null : list.get(0);
     }

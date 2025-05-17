@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ public class UserCategoryFragment extends Fragment {
     private CategoryAdapter adapter;
     private CategoryDao categoryDao;
     private List<Category> categoryList;
+    private TextView tvEmptyCategoryList;
 
     @Nullable
     @Override
@@ -33,6 +35,7 @@ public class UserCategoryFragment extends Fragment {
 
         // Ánh xạ view
         recyclerView = view.findViewById(R.id.recyclerViewCategories);
+        tvEmptyCategoryList = view.findViewById(R.id.tvEmptyCategoryList);
 
         // Thiết lập RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,6 +60,13 @@ public class UserCategoryFragment extends Fragment {
 
         // Cập nhật adapter
         adapter.updateData(categoryList);
+
+        // Hiển thị thông báo nếu không có dữ liệu
+        if (categoryList == null || categoryList.isEmpty()) {
+            tvEmptyCategoryList.setVisibility(View.VISIBLE);
+        } else {
+            tvEmptyCategoryList.setVisibility(View.GONE);
+        }
     }
 
     @Override
