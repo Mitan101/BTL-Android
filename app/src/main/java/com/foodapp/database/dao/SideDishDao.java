@@ -25,8 +25,12 @@ public class SideDishDao {
     public long insert(SideDish sideDish) {
         ContentValues values = new ContentValues();
         values.put("TenDoAnPhu", sideDish.getTenDoAnPhu());
-        values.put("Anh", sideDish.getAnh());
         values.put("Gia", sideDish.getGia());
+
+        // Only include image if it's not null
+        if (sideDish.getAnh() != null) {
+            values.put("anh", sideDish.getAnh());
+        }
 
         return db.insert(Constants.TABLE_SIDE_DISH, null, values);
     }
@@ -35,8 +39,12 @@ public class SideDishDao {
     public int update(SideDish sideDish) {
         ContentValues values = new ContentValues();
         values.put("TenDoAnPhu", sideDish.getTenDoAnPhu());
-        values.put("Anh", sideDish.getAnh());
         values.put("Gia", sideDish.getGia());
+
+        // Only include image if it's not null
+        if (sideDish.getAnh() != null) {
+            values.put("anh", sideDish.getAnh());
+        }
 
         return db.update(Constants.TABLE_SIDE_DISH, values, "MaDoAnPhu=?",
                 new String[]{String.valueOf(sideDish.getMaDoAnPhu())});
@@ -71,7 +79,7 @@ public class SideDishDao {
             sideDish.setTenDoAnPhu(cursor.getString(cursor.getColumnIndexOrThrow("TenDoAnPhu")));
 
             // Get image if exists
-            int anhIndex = cursor.getColumnIndex("Anh");
+            int anhIndex = cursor.getColumnIndex("anh");
             if (anhIndex != -1) {
                 sideDish.setAnh(cursor.getString(anhIndex));
             }

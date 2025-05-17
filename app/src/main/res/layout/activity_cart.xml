@@ -78,6 +78,27 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <CheckBox
+                        android:id="@+id/cbSelectAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_all" />
+
+                    <TextView
+                        android:id="@+id/tvSelectedCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/selected_count" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tvCartTotal"
                     android:layout_width="match_parent"
@@ -86,6 +107,16 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:text="@string/total_price" />
+
+                <TextView
+                    android:id="@+id/tvSelectedTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary"
+                    android:text="@string/selected_total"
+                    android:layout_marginTop="4dp" />
 
                 <Button
                     android:id="@+id/btnCartCheckout"

@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -155,8 +156,7 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
             Category defaultCategory = new Category();
             defaultCategory.setMaLoai(1);
             defaultCategory.setTenLoai("Mặc định");
-            defaultCategory.setMoTa("");
-            defaultCategory.setAnh("");
+
 
             categoryList = new ArrayList<>();
             categoryList.add(defaultCategory);
@@ -434,7 +434,7 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_input_url, null);
         builder.setView(dialogView);
 
-        final TextInputEditText etUrl = dialogView.findViewById(R.id.etUrl);
+        final android.widget.EditText etUrl = dialogView.findViewById(R.id.etUrl);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -447,12 +447,11 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
                                 .placeholder(R.drawable.placeholder)
                                 .error(R.drawable.placeholder)
                                 .into(ivProductImage);
-                        selectedImageUri = null; // Reset URI
-                        // Gán URL vào biến để lưu
+                        selectedImageUri = null;
                         if (!url.startsWith("http://") && !url.startsWith("https://")) {
                             url = "https://" + url;
                         }
-                        selectedUrl = url;
+                        selectedUrl = url; // Assign URL to variable to save
                         Toast.makeText(getContext(), "Ảnh từ URL đã được chọn", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Lỗi hiển thị ảnh từ URL", Toast.LENGTH_SHORT).show();
@@ -497,8 +496,14 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
         String[] permissions;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             permissions = new String[]{android.Manifest.permission.READ_MEDIA_IMAGES};
-        } else {
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             permissions = new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE};
+        } else {
+            // For Android 9 (Pie) and below
+            permissions = new String[]{
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
         }
 
         boolean needRequest = false;
@@ -534,8 +539,8 @@ public class AdminProductFragment extends Fragment implements AdminProductAdapte
 
     private String saveImageToStorage(Uri imageUri) throws IOException {
         try {
-            // Tạo thư mục trong bộ nhớ ứng dụng (không cần quyền)
-            File directory = new File(getContext().getFilesDir(), "product_images");
+            // Sử dụng thư mục cache bên ngoài cho hình ảnh - có thể truy cập từ bộ nhớ chung
+            File directory = new File(getContext().getExternalFilesDir(null), "product_images");
             if (!directory.exists()) {
                 boolean dirCreated = directory.mkdirs();
                 if (!dirCreated) {

@@ -26,7 +26,7 @@
 
         <!-- Main Activity (Splash Screen) -->
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.common.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,41 +36,44 @@
 
         <!-- Authentication Activities -->
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.common.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name=".activities.common.SignUpActivity"
             android:exported="false"
             android:theme="@style/Theme.FoodApp.NoActionBar" />
-        <activity
-            android:name=".activities.ForgotPasswordActivity"
-            android:exported="false" />
 
         <!-- Main Application Activities -->
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".activities.common.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.FoodDetailActivity"
-            android:exported="false" />
+            android:name=".activities.user.FoodDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.CartActivity"
-            android:exported="false" />
+            android:name=".activities.user.CartActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.CartCheckoutActivity"
-            android:exported="false" />
+            android:name=".activities.user.CartCheckoutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.OrderDetailActivity"
-            android:exported="false" />
+            android:name=".activities.user.OrderDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.CategoryProductsActivity"
-            android:exported="false" />
+            android:name=".activities.user.CategoryProductsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.OrderHistoryActivity"
-            android:exported="false" />
+            android:name=".activities.user.OrderHistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FoodApp.NoActionBar" />
         <activity
-            android:name=".activities.UserProfileActivity"
+            android:name=".activities.common.UserProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.FoodApp.NoActionBar" />
     </application>

@@ -20,21 +20,17 @@ public class Constants {
     public static final int CART_REQUEST_CODE = 101;
     public static final int USER_PROFILE_REQUEST_CODE = 102;
 
-    // Trạng thái đơn hàng
-    public static final String STATUS_PENDING = "Đang chờ xử lý";
-    public static final String STATUS_COOKING = "Đang chế biến";
-    public static final String STATUS_DELIVERING = "Đang giao hàng";
-    public static final String STATUS_COMPLETED = "Đã hoàn thành";
-    public static final String STATUS_CANCELLED = "Đã hủy";
-
     // Phương thức thanh toán
     public static final String PAYMENT_CASH = "Tiền mặt khi nhận hàng";
     public static final String PAYMENT_CREDIT_CARD = "Thẻ tín dụng";
 
     // Loại người dùng
     public static final String USER_TYPE_ADMIN = "admin";
-    public static final String USER_TYPE_CHEF = "daubep";
     public static final String USER_TYPE_USER = "user";
+
+    // Trạng thái đơn hàng
+    public static final int ORDER_STATUS_PENDING = 0;
+    public static final int ORDER_STATUS_DELIVERED = 1;
 
     // Intent extra keys
     public static final String EXTRA_FOOD_ID = "food_id";
@@ -42,10 +38,12 @@ public class Constants {
     public static final String EXTRA_CATEGORY_NAME = "category_name";
     public static final String EXTRA_USER_ID = "ma";
     public static final String EXTRA_ORDER_ID = "order_id";
+    public static final String EXTRA_SELECTED_ITEMS_ONLY = "selected_items_only";
+    public static final String EXTRA_SELECTED_ITEM_IDS = "selected_item_ids";
 
     // Database constants
     public static final String DB_NAME = "duan_datdoan";
-    public static final int DB_VERSION = 20;
+    public static final int DB_VERSION = 24;
 
     // Tables
     public static final String TABLE_USER = "dt_nguoidung";
@@ -54,5 +52,4 @@ public class Constants {
     public static final String TABLE_SIDE_DISH = "dt_doanphu";
     public static final String TABLE_ORDER = "dt_hoadon";
     public static final String TABLE_CART = "dt_giohang";
-    public static final String TABLE_TABLE = "dt_banan";
 }

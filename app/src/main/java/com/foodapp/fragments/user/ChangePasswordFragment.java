@@ -1,7 +1,6 @@
 package com.foodapp.fragments.user;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.foodapp.R;
 import com.foodapp.database.dao.UserDao;
 import com.foodapp.models.User;
+import com.foodapp.utils.Constants;
+import com.foodapp.utils.SharedPreferencesManager;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class ChangePasswordFragment extends Fragment {
@@ -23,6 +24,8 @@ public class ChangePasswordFragment extends Fragment {
     private TextInputEditText edtCurrentPassword, edtNewPassword, edtConfirmPassword;
     private Button btnChangePassword;
     private UserDao userDao;
+    private String userId;
+    private SharedPreferencesManager prefsManager;
 
     @Nullable
     @Override
@@ -35,8 +38,12 @@ public class ChangePasswordFragment extends Fragment {
         edtConfirmPassword = view.findViewById(R.id.edtConfirmPassword);
         btnChangePassword = view.findViewById(R.id.btnChangePassword);
 
-        // Khởi tạo DAO
+        // Khởi tạo DAO và SharedPreferencesManager
         userDao = new UserDao(getContext());
+        prefsManager = new SharedPreferencesManager(getContext());
+
+        // Lấy userId từ SharedPreferencesManager
+        userId = prefsManager.getUserId();
 
         // Thiết lập sự kiện cho nút đổi mật khẩu
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
@@ -65,22 +72,34 @@ public class ChangePasswordFragment extends Fragment {
             return;
         }
 
-        // Lấy thông tin người dùng hiện tại
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("USERNAME", "");
+        // Kiểm tra xem đã có userId chưa
+        if (userId == null || userId.isEmpty()) {
+            Toast.makeText(getContext(), R.string.user_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Lấy thông tin người dùng
+        User user = userDao.getById(userId);
+        if (user == null) {
+            Toast.makeText(getContext(), R.string.user_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // Kiểm tra mật khẩu hiện tại
-        if (userDao.checkLogin(username, currentPassword) != null) {
+        if (!currentPassword.equals(user.getMatKhau())) {
             Toast.makeText(getContext(), R.string.current_password_incorrect, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Cập nhật mật khẩu mới
-        User user = userDao.getById(username);
         user.setMatKhau(newPassword);
-
         int result = userDao.updatePassword(user);
         if (result > 0) {
+            // Cập nhật thông tin đăng nhập trong SharedPreferencesManager
+            if (prefsManager.isRemembered()) {
+                prefsManager.saveLoginDetails(user.getMaND(), newPassword, true);
+            }
+
             Toast.makeText(getContext(), R.string.change_password_success, Toast.LENGTH_SHORT).show();
             // Xóa dữ liệu đã nhập
             edtCurrentPassword.setText("");

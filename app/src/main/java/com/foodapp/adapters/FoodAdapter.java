@@ -2,6 +2,7 @@ package com.foodapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.foodapp.R;
-import com.foodapp.activities.FoodDetailActivity;
+import com.foodapp.activities.user.FoodDetailActivity;
 import com.foodapp.models.Food;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public FoodAdapter(Context context, List<Food> foodList) {
         this.context = context;
-        this.foodList = foodList != null ? foodList : new ArrayList<>();
+        this.foodList = new ArrayList<>(foodList != null ? foodList : new ArrayList<>());
     }
 
     @NonNull
@@ -48,7 +50,25 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.tvPrice.setText(String.format("%,d VNĐ", (int) food.getGiaDoAn()));
 
         if (food.getLinkAnh() != null && !food.getLinkAnh().isEmpty()) {
-            Picasso.get().load(food.getLinkAnh()).error(R.drawable.placeholder).into(holder.imgFood);
+            try {
+                String imagePath = food.getLinkAnh();
+
+                if (imagePath.startsWith("/")) {
+                    File imgFile = new File(imagePath);
+                    if (imgFile.exists()) {
+                        Picasso.get().load(imgFile).error(R.drawable.placeholder).into(holder.imgFood);
+                    } else {
+                        holder.imgFood.setImageResource(R.drawable.placeholder);
+                    }
+                } else if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+                    Picasso.get().load(imagePath).error(R.drawable.placeholder).into(holder.imgFood);
+                } else {
+                    Picasso.get().load(imagePath).error(R.drawable.placeholder).into(holder.imgFood);
+                }
+            } catch (Exception e) {
+                Log.e("FoodAdapter", "Error loading image: " + e.getMessage());
+                holder.imgFood.setImageResource(R.drawable.placeholder);
+            }
         } else {
             holder.imgFood.setImageResource(R.drawable.placeholder);
         }
@@ -70,8 +90,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     // Cập nhật dữ liệu mới và thông báo adapter
     public void updateData(List<Food> newData) {
+        Log.d("UserProductFragment", "FilteredList size: " + newData.size());
         this.foodList.clear();
         this.foodList.addAll(newData);
+
         notifyDataSetChanged();
     }
 

@@ -47,6 +47,8 @@
                 android:textSize="14sp"
                 android:text="30.000 VNĐ" />
 
+
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

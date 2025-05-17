@@ -16,6 +16,7 @@ public class SharedPreferencesManager {
     private static final String KEY_EMAIL = "EMAIL";
     private static final String KEY_PHONE = "PHONE";
     private static final String KEY_USER_TYPE = "USER_TYPE";
+    private static final String KEY_USER_ID = "USER_ID";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -44,12 +45,14 @@ public class SharedPreferencesManager {
 
     /**
      * Lưu thông tin chi tiết của người dùng
+     * @param userId ID của người dùng
      * @param fullName Tên đầy đủ
      * @param email Email
      * @param phone Số điện thoại
      * @param userType Loại tài khoản
      */
-    public void saveUserDetails(String fullName, String email, String phone, String userType) {
+    public void saveUserDetails(String userId, String fullName, String email, String phone, String userType) {
+        editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_FULL_NAME, fullName);
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_PHONE, phone);
@@ -79,6 +82,14 @@ public class SharedPreferencesManager {
      */
     public String getPassword() {
         return sharedPreferences.getString(KEY_PASSWORD, "");
+    }
+
+    /**
+     * Lấy ID của người dùng
+     * @return User ID
+     */
+    public String getUserId() {
+        return sharedPreferences.getString(KEY_USER_ID, "");
     }
 
     /**

@@ -30,6 +30,7 @@
     <string name="current_password_incorrect">Mật khẩu hiện tại không đúng</string>
     <string name="password_not_match">Mật khẩu xác nhận không trùng khớp</string>
     <string name="empty_fields">Vui lòng điền đầy đủ thông tin</string>
+    <string name="user_not_found">Không tìm thấy thông tin người dùng</string>
 
     <!-- Menu navigation -->
     <string name="menu_home">Trang chủ</string>
@@ -76,6 +77,12 @@
     <string name="quantity_info">Số lượng: %1$d</string>
     <string name="price_info">Giá: %1$s</string>
     <string name="total_item_price">Thành tiền: %1$s</string>
+    <string name="select_all">Chọn tất cả</string>
+    <string name="selected_count">(%1$d món được chọn)</string>
+    <string name="selected_total">Đã chọn: %1$s</string>
+    <string name="checkout_selected">Thanh toán (%1$d món)</string>
+    <string name="please_select_items">Vui lòng chọn ít nhất một món để thanh toán</string>
+    <string name="no_items_selected">Không có món nào được chọn để thanh toán</string>
 
     <!-- Thanh toán -->
     <string name="delivery_info">Thông tin giao hàng</string>
@@ -91,6 +98,7 @@
     <string name="order_success">Đặt hàng thành công</string>
     <string name="order_failed">Đặt hàng thất bại</string>
     <string name="add_to_cart_success">Thêm vào giỏ hàng thành công</string>
+    <string name="order_automatically">Đặt hàng tự động với thông tin tài khoản</string>
 
     <!-- Trạng thái đơn hàng -->
     <string name="order_status">Trạng thái đơn hàng</string>
@@ -99,6 +107,8 @@
     <string name="status_delivering">Đang giao hàng</string>
     <string name="status_completed">Đã hoàn thành</string>
     <string name="status_cancelled">Đã hủy</string>
+    <string name="order_pending">Chưa giao</string>
+    <string name="order_delivered">Đã giao</string>
 
     <!-- Thông tin chi tiết đơn hàng -->
     <string name="order_detail">Chi tiết đơn hàng</string>
@@ -112,6 +122,13 @@
     <string name="start_cooking">Bắt đầu chế biến</string>
     <string name="complete_order">Hoàn thành món</string>
     <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="view_details">Xem chi tiết</string>
+
+    <!-- Tìm kiếm -->
+    <string name="search_hint">Tìm kiếm món ăn...</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="no_results">Không tìm thấy món ăn nào phù hợp</string>
+    <string name="no_products">Không có món ăn nào</string>
 
     <!-- Thông báo chung -->
     <string name="success">Thành công</string>
