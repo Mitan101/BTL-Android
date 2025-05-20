@@ -17,10 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.foodapp.R;
-import com.foodapp.activities.OrderDetailActivity;
+import com.foodapp.activities.user.OrderDetailActivity;
 import com.foodapp.adapters.OrderAdapter;
 import com.foodapp.database.dao.OrderDao;
-import com.foodapp.interfaces.OnItemClickListener;
 import com.foodapp.models.Order;
 import com.foodapp.utils.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

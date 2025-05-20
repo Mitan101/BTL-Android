@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.foodapp.R;
-import com.foodapp.activities.CategoryProductsActivity;
+import com.foodapp.activities.user.CategoryProductsActivity;
 import com.foodapp.models.Category;
 
 import java.util.ArrayList;
