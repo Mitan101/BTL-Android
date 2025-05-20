@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Du_An1_Nhom10_DOAN"
+rootProject.name = "BTL_Android"
 include(":app")
  

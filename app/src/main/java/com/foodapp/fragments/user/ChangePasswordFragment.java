@@ -1,6 +1,5 @@
 package com.foodapp.fragments.user;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.foodapp.R;
 import com.foodapp.database.dao.UserDao;
 import com.foodapp.models.User;
-import com.foodapp.utils.Constants;
 import com.foodapp.utils.SharedPreferencesManager;
 import com.google.android.material.textfield.TextInputEditText;
 

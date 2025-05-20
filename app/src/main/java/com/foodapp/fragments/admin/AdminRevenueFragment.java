@@ -4,14 +4,12 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -23,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.foodapp.R;
-import com.foodapp.activities.OrderDetailActivity;
+import com.foodapp.activities.user.OrderDetailActivity;
 import com.foodapp.adapters.OrderStatisticsAdapter;
 import com.foodapp.database.dao.OrderDao;
 import com.foodapp.models.Order;
@@ -134,11 +132,9 @@ public class AdminRevenueFragment extends Fragment {
                         selectedDate.set(Calendar.YEAR, year);
                         selectedDate.set(Calendar.MONTH, month);
                         selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
                         isFilteringEnabled = true;
                         String formattedDate = dateFormat.format(selectedDate.getTime());
                         tvFilterInfo.setText("Đơn hàng ngày: " + formattedDate);
-
                         filterOrdersByDate();
                     },
                     selectedDate.get(Calendar.YEAR),

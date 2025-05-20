@@ -123,18 +123,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trạng thái: "
-                    android:textSize="14sp" />
-
-                <TextView
                     android:id="@+id/tvOrderStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="Đang chờ xử lý" />
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <TextView

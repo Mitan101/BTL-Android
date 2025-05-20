@@ -3,15 +3,14 @@ package com.foodapp.fragments.user;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -119,7 +118,6 @@ public class UserProductFragment extends Fragment {
                 }
             }
         }
-
         // Cập nhật adapter
         adapter.updateData(filteredList);
 
@@ -141,7 +139,6 @@ public class UserProductFragment extends Fragment {
 
         // Lấy tất cả món ăn
         foodList = foodDao.getAll();
-        Log.d("nam", "loadData: " + foodList);
 
         // Ban đầu, hiển thị tất cả món ăn
         filteredList.clear();
@@ -161,5 +158,12 @@ public class UserProductFragment extends Fragment {
 
         // Ẩn loading
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Làm mới dữ liệu khi fragment được hiển thị lại
+        loadData();
     }
 }
