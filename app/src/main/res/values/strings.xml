@@ -1,3 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BTL</string>
+    <!-- Tên ứng dụng -->
+    <string name="app_name">Food App</string>
+
+    <!-- Navigation -->
+    <string name="open">Mở</string>
+    <string name="close">Đóng</string>
+
+    <!-- Auth -->
+    <string name="login">Đăng nhập</string>
+    <string name="signup">Đăng ký</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="email">Email</string>
+    <string name="fullname">Họ và tên</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="remember_me">Ghi nhớ tài khoản</string>
+    <string name="year_of_birth">Năm sinh</string>
+    <string name="username_exists">Tên đăng nhập đã tồn tại</string>
+    <string name="email_exists">Email đã được sử dụng</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="login_failed">Đăng nhập thất bại</string>
+    <string name="signup_success">Đăng ký thành công</string>
+    <string name="signup_failed">Đăng ký thất bại</string>
+    <string name="change_password_success">Đổi mật khẩu thành công</string>
+    <string name="change_password_failed">Đổi mật khẩu thất bại</string>
+    <string name="current_password_incorrect">Mật khẩu hiện tại không đúng</string>
+    <string name="password_not_match">Mật khẩu xác nhận không trùng khớp</string>
+    <string name="empty_fields">Vui lòng điền đầy đủ thông tin</string>
+    <string name="user_not_found">Không tìm thấy thông tin người dùng</string>
+
+    <!-- Menu navigation -->
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_products">Danh sách món</string>
+    <string name="menu_categories">Danh mục món</string>
+    <string name="menu_cart">Giỏ hàng</string>
+    <string name="menu_orders">Đơn hàng của tôi</string>
+    <string name="menu_profile">Tài khoản</string>
+    <string name="menu_change_password">Đổi mật khẩu</string>
+    <string name="menu_logout">Đăng xuất</string>
+
+    <!-- Menu Admin -->
+    <string name="menu_admin_dashboard">Quản lý chung</string>
+    <string name="menu_admin_products">Quản lý sản phẩm</string>
+    <string name="menu_admin_categories">Quản lý danh mục</string>
+    <string name="menu_admin_users">Quản lý người dùng</string>
+    <string name="menu_admin_orders">Quản lý đơn hàng</string>
+    <string name="menu_admin_revenue">Thống kê doanh thu</string>
+    <string name="menu_admin_tables">Quản lý bàn</string>
+
+    <!-- Menu Đầu bếp -->
+    <string name="menu_chef_orders">Đơn hàng cần xử lý</string>
+
+    <!-- Chi tiết sản phẩm -->
+    <string name="product_detail">Chi tiết sản phẩm</string>
+    <string name="product_price">Giá: %1$s VNĐ</string>
+    <string name="product_description">Mô tả</string>
+    <string name="product_category">Loại</string>
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="order_now">Đặt ngay</string>
+    <string name="quantity">Số lượng</string>
+
+    <!-- Giỏ hàng -->
+    <string name="cart">Giỏ hàng</string>
+    <string name="cart_empty">Giỏ hàng của bạn đang trống</string>
+    <string name="total_price">Tổng tiền: %1$s VNĐ</string>
+    <string name="checkout">Thanh toán</string>
+    <string name="clear_cart">Xóa giỏ hàng</string>
+    <string name="continue_shopping">Tiếp tục mua sắm</string>
+    <string name="item_removed">Đã xóa sản phẩm</string>
+    <string name="clear_cart_confirm">Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?</string>
+    <string name="cart_cleared">Đã xóa toàn bộ giỏ hàng</string>
+    <string name="add_to_cart_confirm">Thêm vào giỏ hàng?</string>
+    <string name="quantity_info">Số lượng: %1$d</string>
+    <string name="price_info">Giá: %1$s</string>
+    <string name="total_item_price">Thành tiền: %1$s</string>
+    <string name="select_all">Chọn tất cả</string>
+    <string name="selected_count">(%1$d món được chọn)</string>
+    <string name="selected_total">Đã chọn: %1$s</string>
+    <string name="checkout_selected">Thanh toán (%1$d món)</string>
+    <string name="please_select_items">Vui lòng chọn ít nhất một món để thanh toán</string>
+    <string name="no_items_selected">Không có món nào được chọn để thanh toán</string>
+
+    <!-- Thanh toán -->
+    <string name="delivery_info">Thông tin giao hàng</string>
+    <string name="delivery_name">Tên người nhận</string>
+    <string name="delivery_phone">Số điện thoại người nhận</string>
+    <string name="delivery_address">Địa chỉ nhận hàng</string>
+    <string name="payment_method">Phương thức thanh toán</string>
+    <string name="cash_on_delivery">Tiền mặt khi nhận hàng</string>
+    <string name="credit_card">Thẻ tín dụng</string>
+    <string name="order_confirmation">Xác nhận đơn hàng</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="cancel">Hủy</string>
+    <string name="order_success">Đặt hàng thành công</string>
+    <string name="order_failed">Đặt hàng thất bại</string>
+    <string name="add_to_cart_success">Thêm vào giỏ hàng thành công</string>
+    <string name="order_automatically">Đặt hàng tự động với thông tin tài khoản</string>
+
+    <!-- Trạng thái đơn hàng -->
+    <string name="order_status">Trạng thái đơn hàng</string>
+    <string name="status_pending">Đang chờ xử lý</string>
+    <string name="status_cooking">Đang chế biến</string>
+    <string name="status_delivering">Đang giao hàng</string>
+    <string name="status_completed">Đã hoàn thành</string>
+    <string name="status_cancelled">Đã hủy</string>
+    <string name="order_pending">Chưa giao</string>
+    <string name="order_delivered">Đã giao</string>
+
+    <!-- Thông tin chi tiết đơn hàng -->
+    <string name="order_detail">Chi tiết đơn hàng</string>
+    <string name="order_items">Món đã đặt</string>
+    <string name="customer_info">Thông tin khách hàng</string>
+    <string name="customer_name">Tên khách hàng: %1$s</string>
+    <string name="customer_phone">Số điện thoại: %1$s</string>
+    <string name="customer_address">Địa chỉ: %1$s</string>
+    <string name="update_status_success">Cập nhật trạng thái thành công</string>
+    <string name="update_status_failed">Cập nhật trạng thái thất bại</string>
+    <string name="start_cooking">Bắt đầu chế biến</string>
+    <string name="complete_order">Hoàn thành món</string>
+    <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="view_details">Xem chi tiết</string>
+
+    <!-- Tìm kiếm -->
+    <string name="search_hint">Tìm kiếm món ăn...</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="no_results">Không tìm thấy món ăn nào phù hợp</string>
+    <string name="no_products">Không có món ăn nào</string>
+
+    <!-- Thông báo chung -->
+    <string name="success">Thành công</string>
+    <string name="error">Lỗi</string>
+    <string name="warning">Cảnh báo</string>
+    <string name="info">Thông tin</string>
+    <string name="confirm_title">Xác nhận</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+    <string name="ok">OK</string>
+    <string name="network_error">Không có kết nối internet</string>
+    <string name="server_error">Lỗi kết nối máy chủ</string>
+    <string name="unknown_error">Đã xảy ra lỗi không xác định</string>
+
+    <!-- Thông tin người dùng -->
+    <string name="profile">Thông tin tài khoản</string>
+    <string name="update_profile">Cập nhật thông tin</string>
+    <string name="save">Lưu</string>
+    <string name="update_profile_success">Cập nhật thông tin thành công</string>
+    <string name="update_profile_failed">Cập nhật thông tin thất bại</string>
+
+    <!-- Đổi mật khẩu -->
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="current_password">Mật khẩu hiện tại</string>
+    <string name="new_password">Mật khẩu mới</string>
 </resources>
