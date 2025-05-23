@@ -28,6 +28,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
 
     private int categoryId;
     private String categoryName;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
         // Nhận dữ liệu từ Intent
         categoryId = getIntent().getIntExtra("category_id", 0);
         categoryName = getIntent().getStringExtra("category_name");
+        userId = getIntent().getIntExtra("user_id", 0);
 
         // Ánh xạ view
         recyclerView = findViewById(R.id.recyclerViewCategoryProducts);
@@ -60,7 +62,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
 
         // Khởi tạo danh sách và adapter
         foodList = new ArrayList<>();
-        adapter = new FoodAdapter(this, foodList);
+        adapter = new FoodAdapter(this, foodList,userId);
         recyclerView.setAdapter(adapter);
 
         // Khởi tạo DAO

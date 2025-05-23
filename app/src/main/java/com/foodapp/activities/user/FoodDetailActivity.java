@@ -48,6 +48,7 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
     private List<SideDish> selectedSideDishes = new ArrayList<>();
     private Map<Integer, Integer> sideDishQuantities = new HashMap<>();
     private double totalPrice = 0;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,8 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
             Toast.makeText(this, "Không tìm thấy thông tin món ăn", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        userId = getIntent().getIntExtra("user_id", 0);
 
         // Xử lý sự kiện cho nút tăng/giảm số lượng
         btnPlus.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +181,7 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
         if (food != null) {
             CartItem cartItem = new CartItem();
             cartItem.setTenSanPham(food.getTenDoAn());
+            cartItem.setMaTV(userId);
             cartItem.setGiaSanPham(calculateTotalPrice());
             cartItem.setSoLuong(quantity);
             cartItem.setAnhSanPham(food.getLinkAnh());

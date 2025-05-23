@@ -8,12 +8,14 @@ public class CartItem {
     private int soLuong;
     private String anhSanPham;
     private boolean isSelected;
+    private int maTV;
 
     public CartItem() {
     }
 
-    public CartItem(int maSanPham, String tenSanPham, String tenDoAnPhu, double giaSanPham, int soLuong, String anhSanPham) {
+    public CartItem(int maSanPham,int maTV, String tenSanPham, String tenDoAnPhu, double giaSanPham, int soLuong, String anhSanPham) {
         this.maSanPham = maSanPham;
+        this.maTV = maTV;
         this.tenSanPham = tenSanPham;
         this.tenDoAnPhu = tenDoAnPhu;
         this.giaSanPham = giaSanPham;
@@ -82,4 +84,12 @@ public class CartItem {
     public double getTotalPrice() {
         return giaSanPham * soLuong;
     }
+
+    public int getMaTV() {
+        return maTV;
+    }
+    public void setMaTV(int maTV) {
+        this.maTV = maTV;
+    }
+
 }

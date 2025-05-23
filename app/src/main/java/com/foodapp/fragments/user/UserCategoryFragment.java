@@ -27,11 +27,16 @@ public class UserCategoryFragment extends Fragment {
     private CategoryDao categoryDao;
     private List<Category> categoryList;
     private TextView tvEmptyCategoryList;
+    private int userId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_category, container, false);
+
+        if (getArguments() != null) {
+            userId = getArguments().getInt("userId");
+        }
 
         // Ánh xạ view
         recyclerView = view.findViewById(R.id.recyclerViewCategories);
@@ -42,7 +47,7 @@ public class UserCategoryFragment extends Fragment {
 
         // Khởi tạo danh sách và adapter
         categoryList = new ArrayList<>();
-        adapter = new CategoryAdapter(getContext(), categoryList);
+        adapter = new CategoryAdapter(getContext(), categoryList,userId);
         recyclerView.setAdapter(adapter);
 
         // Lấy dữ liệu từ database

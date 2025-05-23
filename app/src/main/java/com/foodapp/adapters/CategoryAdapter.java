@@ -22,10 +22,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context context;
     private List<Category> categoryList;
+    private int userId;
 
-    public CategoryAdapter(Context context, List<Category> categoryList) {
+    public CategoryAdapter(Context context, List<Category> categoryList, int userId) {
         this.context = context;
         this.categoryList = categoryList != null ? categoryList : new ArrayList<>();
+        this.userId = userId;
     }
 
     @NonNull
@@ -48,6 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 Intent intent = new Intent(context, CategoryProductsActivity.class);
                 intent.putExtra("category_id", category.getMaLoai());
                 intent.putExtra("category_name", category.getTenLoai());
+                intent.putExtra("user_id", userId);
                 context.startActivity(intent);
             }
         });

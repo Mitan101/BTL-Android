@@ -37,11 +37,16 @@ public class UserProductFragment extends Fragment {
     private ImageButton btnSearch;
     private ProgressBar progressBar;
     private TextView tvEmptyList;
+    private int userId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_product, container, false);
+
+        if (getArguments() != null) {
+            userId = getArguments().getInt("userId");
+        }
 
         recyclerView = view.findViewById(R.id.recyclerViewProducts);
         edtSearch = view.findViewById(R.id.edtSearch);
@@ -55,7 +60,7 @@ public class UserProductFragment extends Fragment {
         // Khởi tạo danh sách và adapter
         foodList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        adapter = new FoodAdapter(getContext(), filteredList);
+        adapter = new FoodAdapter(getContext(), filteredList, userId);
         recyclerView.setAdapter(adapter);
 
         // Thiết lập sự kiện tìm kiếm

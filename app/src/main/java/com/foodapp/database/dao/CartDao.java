@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.foodapp.database.DatabaseHelper;
 import com.foodapp.models.CartItem;
@@ -23,6 +24,7 @@ public class CartDao {
     // Thêm sản phẩm vào giỏ hàng
     public long insert(CartItem cartItem) {
         ContentValues values = new ContentValues();
+        values.put("maTV", cartItem.getMaTV());
         values.put("tensp", cartItem.getTenSanPham());
         values.put("tendoanphu", cartItem.getTenDoAnPhu());
         values.put("giasp", cartItem.getGiaSanPham());
@@ -56,6 +58,11 @@ public class CartDao {
         return getData(sql);
     }
 
+    public List<CartItem> getAllUser(int maTV) {
+        String sql = "SELECT * FROM dt_giohang WHERE maTV=?";
+        return getDataUser(sql, String.valueOf(maTV));
+    }
+
     // Xử lý dữ liệu từ cursor
     private List<CartItem> getData(String sql, String... selectionArgs) {
         List<CartItem> list = new ArrayList<>();
@@ -64,11 +71,32 @@ public class CartDao {
         while (cursor.moveToNext()) {
             CartItem cartItem = new CartItem();
             cartItem.setMaSanPham(cursor.getInt(0));
-            cartItem.setTenSanPham(cursor.getString(1));
-            cartItem.setTenDoAnPhu(cursor.getString(2));
-            cartItem.setGiaSanPham(cursor.getDouble(3));
-            cartItem.setSoLuong(cursor.getInt(4));
-            cartItem.setAnhSanPham(cursor.getString(5));
+            cartItem.setMaTV(cursor.getInt(1));
+            cartItem.setTenSanPham(cursor.getString(2));
+            cartItem.setTenDoAnPhu(cursor.getString(3));
+            cartItem.setGiaSanPham(cursor.getDouble(4));
+            cartItem.setSoLuong(cursor.getInt(5));
+            cartItem.setAnhSanPham(cursor.getString(6));
+            list.add(cartItem);
+            Log.d("zzzzz", String.valueOf(cartItem.getMaTV()));
+        }
+        cursor.close();
+        return list;
+    }
+
+    private List<CartItem> getDataUser(String sql, String... selectionArgs) {
+        List<CartItem> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+
+        while (cursor.moveToNext()) {
+            CartItem cartItem = new CartItem();
+            cartItem.setMaSanPham(cursor.getInt(0));
+            cartItem.setMaTV(cursor.getInt(1));
+            cartItem.setTenSanPham(cursor.getString(2));
+            cartItem.setTenDoAnPhu(cursor.getString(3));
+            cartItem.setGiaSanPham(cursor.getDouble(4));
+            cartItem.setSoLuong(cursor.getInt(5));
+            cartItem.setAnhSanPham(cursor.getString(6));
             list.add(cartItem);
         }
         cursor.close();
@@ -76,9 +104,9 @@ public class CartDao {
     }
 
     // Tính tổng giá trị giỏ hàng
-    public double getTotalPrice() {
+    public double getTotalPrice(int userId) {
         double total = 0;
-        List<CartItem> cartItems = getAll();
+        List<CartItem> cartItems = getAllUser(userId);
         for (CartItem item : cartItems) {
             total += item.getTotalPrice();
         }

@@ -2,6 +2,7 @@ package com.foodapp.activities.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -37,11 +38,14 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
 
     private CartDao cartDao;
     private List<CartItem> cartItems;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        userId = getIntent().getIntExtra("userId", -1);
 
         // Ánh xạ view
         toolbar = findViewById(R.id.toolbarCart);
@@ -117,7 +121,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
 
         try {
             // Create a new list to store items
-            List<CartItem> freshCartItems = cartDao.getAll();
+            List<CartItem> freshCartItems = cartDao.getAllUser(userId);
 
             // Reset current list reference to avoid issues
             cartItems = new ArrayList<>();
@@ -153,7 +157,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
 
     private void updateTotalPrice() {
         // Tính tổng tiền
-        double totalPrice = cartDao.getTotalPrice();
+        double totalPrice = cartDao.getTotalPrice(userId);
 
         // Định dạng giá tiền
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));

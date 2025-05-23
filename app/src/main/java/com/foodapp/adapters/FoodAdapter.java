@@ -25,10 +25,12 @@ import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private Context context;
     private List<Food> foodList;
+    private int userId;
 
-    public FoodAdapter(Context context, List<Food> foodList) {
+    public FoodAdapter(Context context, List<Food> foodList, int userId) {
         this.context = context;
         this.foodList = new ArrayList<>(foodList != null ? foodList : new ArrayList<>());
+        this.userId = userId;
     }
 
     @NonNull
@@ -77,6 +79,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FoodDetailActivity.class);
+                intent.putExtra("user_id", userId);
                 intent.putExtra("food_id", food.getMaDoAn());
                 context.startActivity(intent);
             }

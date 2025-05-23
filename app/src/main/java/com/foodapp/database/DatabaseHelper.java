@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Bảng giỏ hàng
         String giohang = "CREATE TABLE " + Constants.TABLE_CART +
-                "(masp integer primary key not null ,tensp text not null,tendoanphu text," +
+                "(masp integer primary key not null, maTV integer not null, tensp text not null,tendoanphu text," +
                 "giasp integer not null,soluong integer,anhsp text, table_info text)";
         sqLiteDatabase.execSQL(giohang);
     }

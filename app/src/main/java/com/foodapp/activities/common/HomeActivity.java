@@ -115,6 +115,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", user.getMaTV());
+        userProductFragment.setArguments(bundle);
+        userCategoryFragment.setArguments(bundle);
+
         // Hiện thị menu theo loại người dùng
         fragmentManager = getSupportFragmentManager();
 
@@ -164,6 +169,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.home_fragment, userProductFragment).commit();
             } else if (itemId == R.id.home_user_giohang) {
                 Intent intentToCart = new Intent(HomeActivity.this, CartActivity.class);
+                intentToCart.putExtra("userId", user.getMaTV());
                 startActivity(intentToCart);
             } else if (itemId == R.id.home_user_hoadon) {
                 Intent intentToOrder = new Intent(HomeActivity.this, OrderHistoryActivity.class);
