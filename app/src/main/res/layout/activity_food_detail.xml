@@ -179,13 +179,6 @@
             android:layout_marginEnd="8dp"
             android:text="Thêm vào giỏ" />
 
-        <Button
-            android:id="@+id/btnOrderNow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/accent"
-            android:text="Đặt ngay" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

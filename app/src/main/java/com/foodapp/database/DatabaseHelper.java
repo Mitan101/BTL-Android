@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql_doan);
         String doan_1 = "INSERT INTO " + Constants.TABLE_FOOD + " values('1','cơm rang',30000,1,'Cơm rất ngon','https://lh3.googleusercontent.com/CB-FFqhq6t5UbEnTKo0Rw6fX1gtO89k4ZPDZLHDNW09Gv9JH89xeaqohwsq6xzfuEHAooiFLhMbDgl_zkKrRP8fBLZk=w622')";
         sqLiteDatabase.execSQL(doan_1);
-        String doan_2 = "INSERT INTO " + Constants.TABLE_FOOD + " values('2','bún chả ',30000,2,'Bún rất ngon','https://bizweb.dktcdn.net/100/442/328/products/bun-cha-ha-noi.jpg?v=1644892472637')";
+        String doan_2 = "INSERT INTO " + Constants.TABLE_FOOD + " values('2','bún chả ',30000,2,'Bún rất ngon','https://khaihoanphuquoc.com.vn/wp-content/uploads/2023/08/cach-lam-nuoc-mam-bun-cha-02-2048x1536.jpg')";
         sqLiteDatabase.execSQL(doan_2);
         String doan_3 = "INSERT INTO " + Constants.TABLE_FOOD + " values('3','Xôi ngô',15000,3,'Xôi rất dẻo và thơm','https://i-giadinh.vnecdn.net/2022/02/25/Thanh-pham-1-6778-1645781140.jpg')";
         sqLiteDatabase.execSQL(doan_3);

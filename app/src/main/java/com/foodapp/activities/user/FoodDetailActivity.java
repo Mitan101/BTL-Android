@@ -34,7 +34,7 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
 
     private ImageView imgFood;
     private TextView tvName, tvPrice, tvDescription, tvCategory;
-    private Button btnAddToCart, btnOrderNow, btnMinus, btnPlus;
+    private Button btnAddToCart, btnMinus, btnPlus;
     private TextView tvQuantity;
     private Toolbar toolbar;
     private RecyclerView recyclerViewSideDishes;
@@ -67,7 +67,6 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
         tvDescription = findViewById(R.id.tvFoodDetailDescription);
         tvCategory = findViewById(R.id.tvFoodDetailCategory);
         btnAddToCart = findViewById(R.id.btnAddToCart);
-        btnOrderNow = findViewById(R.id.btnOrderNow);
         btnMinus = findViewById(R.id.btnMinus);
         btnPlus = findViewById(R.id.btnPlus);
         tvQuantity = findViewById(R.id.tvQuantity);
@@ -126,16 +125,6 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
                 addToCart();
             }
         });
-
-        // Xử lý sự kiện cho nút đặt ngay
-        btnOrderNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToCart();
-                Intent intent = new Intent(FoodDetailActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void loadSideDishes() {
@@ -171,9 +160,6 @@ public class FoodDetailActivity extends AppCompatActivity implements SideDishAda
             } else {
                 imgFood.setImageResource(R.drawable.placeholder);
             }
-
-            // TODO: Lấy tên danh mục từ mã danh mục
-            // tvCategory.setText(categoryName);
         }
     }
 

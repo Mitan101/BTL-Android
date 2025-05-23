@@ -62,19 +62,10 @@ public class OrderDao {
         return result;
     }
 
-    // Lấy hóa đơn theo userId
-    public List<Order> getOrdersByUser(String userId) {
-        String sql = "SELECT * FROM dt_hoadon WHERE Email=(SELECT Email FROM dt_nguoidung WHERE MaND=?)";
-        return getData(sql, userId);
-    }
-
-
     private List<Order> getData(String sql, String... selectionArgs) {
         List<Order> list = new ArrayList<>();
         try {
-            Log.d("OrderDao", "Executing query: " + sql + " with args: " + String.join(", ", selectionArgs));
             Cursor cursor = db.rawQuery(sql, selectionArgs);
-            Log.d("OrderDao", "Cursor count: " + cursor.getCount());
 
             while (cursor.moveToNext()) {
                 try {
@@ -97,7 +88,6 @@ public class OrderDao {
         } catch (Exception e) {
             Log.e("OrderDao", "Database error in getData", e);
         }
-        Log.d("OrderDao", "Returning " + list.size() + " orders");
         return list;
     }
 }
