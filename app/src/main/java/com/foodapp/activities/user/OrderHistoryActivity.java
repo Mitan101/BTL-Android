@@ -69,17 +69,10 @@ public class OrderHistoryActivity extends BaseActivity {
     private void loadOrderHistory() {
         showLoading();
 
-        // Lấy email người dùng đã đăng nhập
-        String email = getCurrentUserEmail();
-        if (email.isEmpty()) {
-            tvEmptyOrders.setVisibility(View.VISIBLE);
-            tvEmptyOrders.setText("Bạn cần đăng nhập để xem đơn hàng");
-            hideLoading();
-            return;
-        }
+        String idUser = getCurrentUserId();
 
         try {
-            orderList = orderDao.getByUserEmail(email);
+            orderList = orderDao.getByUser(idUser);
 
             if (orderList.isEmpty()) {
                 tvEmptyOrders.setVisibility(View.VISIBLE);

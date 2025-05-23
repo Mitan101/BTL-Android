@@ -2,7 +2,7 @@ package com.foodapp.models;
 
 public class Order {
     private int maHoaDon;
-    private String email;
+    private String userId;
     private String hoTen;
     private String sdt;
     private String diaChi;
@@ -14,9 +14,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(int maHoaDon, String email, String hoTen, String sdt, String diaChi, String thucDon, String ngayDat, double tongTien, String thanhToan) {
+    public Order(int maHoaDon, String userId, String hoTen, String sdt, String diaChi, String thucDon, String ngayDat, double tongTien, String thanhToan) {
         this.maHoaDon = maHoaDon;
-        this.email = email;
+        this.userId = userId;
         this.hoTen = hoTen;
         this.sdt = sdt;
         this.diaChi = diaChi;
@@ -34,12 +34,12 @@ public class Order {
         this.maHoaDon = maHoaDon;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getHoTen() {
@@ -102,7 +102,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "maHoaDon=" + maHoaDon +
-                ", email='" + email + '\'' +
+                ", userId='" + userId + '\'' +
                 ", hoTen='" + hoTen + '\'' +
                 ", sdt='" + sdt + '\'' +
                 ", diaChi='" + diaChi + '\'' +

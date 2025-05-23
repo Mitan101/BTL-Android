@@ -279,9 +279,6 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
 
             // Xóa khỏi list - add bounds check to avoid IndexOutOfBoundsException
             if (position >= 0 && position < cartItems.size()) {
-                // Store a copy of the removed item for better animation
-                CartItem removedItem = cartItems.get(position);
-
                 // Remove the item from our list
                 cartItems.remove(position);
 
@@ -308,11 +305,8 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
             // Cập nhật thông tin về các món đã chọn
             updateSelectedInfo();
         } catch (Exception e) {
-            e.printStackTrace();
-            // Reload cart items to ensure UI is in sync with data
             loadCartItems();
         } finally {
-            // Hide loading when done
             hideLoading();
         }
     }

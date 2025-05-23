@@ -93,12 +93,6 @@ public class CartCheckoutActivity extends BaseActivity {
 
         cartItems = cartDao.getAll();
 
-        if (cartItems.isEmpty()) {
-            showToast(getString(R.string.cart_empty));
-            finish();
-            return;
-        }
-
         selectedItems = new ArrayList<>();
 
         if (selectedItemsOnly && selectedIds != null && !selectedIds.isEmpty()) {
@@ -109,12 +103,6 @@ public class CartCheckoutActivity extends BaseActivity {
             }
         } else {
             selectedItems.addAll(cartItems);
-        }
-
-        if (selectedItems.isEmpty()) {
-            showToast(getString(R.string.no_items_selected));
-            finish();
-            return;
         }
 
         totalPrice = 0;
@@ -128,11 +116,6 @@ public class CartCheckoutActivity extends BaseActivity {
     }
 
     private void placeOrder() {
-        if (!isLoggedIn()) {
-            showToast(getString(R.string.login_failed));
-            return;
-        }
-
         String name = edtName.getText().toString().trim();
         String phone = edtPhone.getText().toString().trim();
         String address = edtAddress.getText().toString().trim();
@@ -146,14 +129,12 @@ public class CartCheckoutActivity extends BaseActivity {
 
         Order order = new Order();
         order.setMaHoaDon(generateOrderId());
-        order.setEmail(prefsManager.getEmail());
+        order.setUserId(prefsManager.getUserId());
         order.setHoTen(name);
         order.setSdt(phone);
         order.setDiaChi(address);
         order.setThucDon(generateOrderItems());
         order.setNgayDat(AppUtils.getCurrentDateTime());
-
-        Log.d("CartCheckout", "Total Price: " + totalPrice + " for " + selectedItems.size() + " items");
 
         order.setTongTien(totalPrice);
         order.setThanhToan(paymentMethod);

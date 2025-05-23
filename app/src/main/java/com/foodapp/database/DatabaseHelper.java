@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Bảng hóa đơn
         String sql_hoadon = "CREATE TABLE " + Constants.TABLE_ORDER +
-                "(mahoadon integer primary key,Email text not null,hoten text,SDT text not null," +
+                "(mahoadon integer primary key, maTV integer not null, hoten text,SDT text not null," +
                 "diachinhan text not null, thucdon text ,ngaydathang text,tongtien integer ,thanhtoan text)";
         sqLiteDatabase.execSQL(sql_hoadon);
 
